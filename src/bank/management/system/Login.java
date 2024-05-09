@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Login extends JFrame implements ActionListener {
-    JLabel welcomeLabel, cardNoLabel, pinLabel;
+    JLabel logo, welcomeLabel, cardNoLabel, pinLabel;
     JTextField cardNoField;
     JPasswordField pinField;
     JButton signInButton, clearButton, singUpButton;
@@ -15,32 +15,20 @@ public class Login extends JFrame implements ActionListener {
 
         setTitle("AUTOMATED TELLER MACHINE");
 
-        ImageIcon logo = new ImageIcon(ClassLoader.getSystemResource("icons/logo.jpg"));
-        Image logoScaled = logo.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT);
-        ImageIcon logoIconScaled = new ImageIcon(logoScaled);
+        logo = JElementsCreator.createLogo();
+        logo.setBounds(70, 10, 100, 100);
+        add(logo);
 
-        JLabel label = new JLabel(logoIconScaled);
-        label.setBounds(70, 10, 100, 100);
-        add(label);
-
-        welcomeLabel = new JLabel("Welcome to ATM");
-        welcomeLabel.setFont((new Font("Osward", Font.BOLD, 38)));
-        welcomeLabel.setBounds(200, 40, 400, 40);
+        welcomeLabel = JElementsCreator.createJLabel("Welcome to ATM", 38, 200, 40, 400, 40);
         add(welcomeLabel);
 
-        cardNoLabel = new JLabel("Card No:");
-        cardNoLabel.setFont(new Font("Raleway", Font.BOLD, 28));
-        cardNoLabel.setBounds(125, 150, 375, 30);
+        cardNoLabel = JElementsCreator.createJLabel("Card No:", 28, 125, 150, 375, 30);
         add(cardNoLabel);
 
-        cardNoField = new JTextField(15);
-        cardNoField.setBounds(300, 150, 230, 30);
-        cardNoField.setFont(new Font("Arial", Font.BOLD, 14));
+        cardNoField = JElementsCreator.createJTextField(300, 150, 230, 30);
         add(cardNoField);
 
-        pinLabel = new JLabel("PIN:");
-        pinLabel.setFont(new Font("Raleway", Font.BOLD, 28));
-        pinLabel.setBounds(125, 220, 375, 30);
+        pinLabel = JElementsCreator.createJLabel("PIN:", 28, 125, 220, 375, 30);
         add(pinLabel);
 
         pinField = new JPasswordField(15);
@@ -48,11 +36,11 @@ public class Login extends JFrame implements ActionListener {
         pinField.setBounds(300, 220, 230, 30);
         add(pinField);
 
-        signInButton = generateLoginButton("SIGN IN", 300, 300, 100, 30);
+        signInButton = JElementsCreator.createJButton("SIGN IN", 300, 300, 100, 30, this);
         add(signInButton);
-        clearButton = generateLoginButton("CLEAR", 430, 300, 100, 30);
+        clearButton = JElementsCreator.createJButton("CLEAR", 430, 300, 100, 30, this);
         add(clearButton);
-        singUpButton = generateLoginButton("SIGN UP", 300, 350, 230, 30);
+        singUpButton = JElementsCreator.createJButton("SIGN UP", 300, 350, 230, 30, this);
         add(singUpButton);
 
         setLayout(null);
@@ -84,14 +72,4 @@ public class Login extends JFrame implements ActionListener {
         }
     }
 
-    private JButton generateLoginButton(String text, int x, int y, int width, int height) {
-        JButton buttonToReturn = new JButton(text);
-        buttonToReturn.setBackground(Color.BLACK);
-        buttonToReturn.setForeground(Color.WHITE);
-        buttonToReturn.setFont(new Font("Arial", Font.BOLD, 14));
-        buttonToReturn.setBounds(x, y, width, height);
-        buttonToReturn.addActionListener(this);
-
-        return buttonToReturn;
-    }
 }
