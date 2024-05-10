@@ -136,12 +136,50 @@ public class SignUpPageOne extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-//        try {
-//
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
+    public void actionPerformed(ActionEvent ae) {
+        String formno = "" + first;
+        String name = nameTF.getText();
+        String fname = fatherNameTF.getText();
+        String dob = ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText();
+        String gender = null;
+        if (maleR.isSelected()) {
+            gender = "Male";
+        } else if (femaleR.isSelected()) {
+            gender = "Female";
+        }
+
+        String email = emailTF.getText();
+        String marital = null;
+        if (marriedR.isSelected()) {
+            marital = "Married";
+        } else if (unmarriedR.isSelected()) {
+            marital = "Unmarried";
+        } else if (otherR.isSelected()) {
+            marital = "Other";
+        }
+
+        String address = addressTF.getText();
+        String city = cityTF.getText();
+        String pincode = pinCodeTF.getText();
+        String state = stateTF.getText();
+
+
+        try {
+
+            if (pinCodeTF.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Fill all the required fields");
+            } else {
+                Conn c = new Conn();
+                String query = "insert into signup values('" + formno + "','" + name + "','" + fname + "','" + dob + "','" + gender + "','" + email + "','" + marital + "','" + address + "','" + city + "','" + pincode + "','" + state + "')";
+                c.s.executeUpdate(query);
+
+//                new Signup2(first).setVisible(true);
+                setVisible(false);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
