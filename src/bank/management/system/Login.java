@@ -57,18 +57,19 @@ public class Login extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent ae) {
         try {
-            if (e.getSource() == signInButton) {
+            if (ae.getSource() == signInButton) {
 
-            } else if (e.getSource() == clearButton) {
+            } else if (ae.getSource() == clearButton) {
                 cardNoField.setText("");
                 pinField.setText("");
-            } else if (e.getSource() == singUpButton) {
+            } else if (ae.getSource() == singUpButton) {
                 setVisible(false);
+                new SignUpPageOne().setVisible(true);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

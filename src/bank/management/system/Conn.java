@@ -7,6 +7,7 @@ public class Conn {
     Connection c;
     Statement s;
 
+    //change passwort to connect to the database
     public Conn() {
         try {
             //Class.forName("com.mysql.cj.jdbc.Driver");

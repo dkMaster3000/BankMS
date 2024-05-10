@@ -131,6 +131,7 @@ public class SignUpPageOne extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    //for testing purpose -> delete later
     public static void main(String[] args) {
         new SignUpPageOne();
     }
@@ -163,9 +164,8 @@ public class SignUpPageOne extends JFrame implements ActionListener {
         String pincode = pinCodeTF.getText();
         String state = stateTF.getText();
 
-
+        //todo better evaluation
         try {
-
             if (pinCodeTF.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Fill all the required fields");
             } else {
