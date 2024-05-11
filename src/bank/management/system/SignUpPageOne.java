@@ -100,9 +100,7 @@ public class SignUpPageOne extends JFrame implements ActionListener {
         femaleR = JElementsCreator.createJRadioButton("Female", 450, 290, 90, 30);
         add(femaleR);
 
-        ButtonGroup groupgender = new ButtonGroup();
-        groupgender.add(maleR);
-        groupgender.add(femaleR);
+        JElementsCreator.groupJRadioButtons(new JRadioButton[]{maleR, femaleR});
 
 
         marriedR = JElementsCreator.createJRadioButton("Married", 300, 390, 100, 30);
@@ -112,10 +110,8 @@ public class SignUpPageOne extends JFrame implements ActionListener {
         otherR = JElementsCreator.createJRadioButton("Other", 635, 390, 100, 30);
         add(otherR);
 
-        ButtonGroup groupstatus = new ButtonGroup();
-        groupstatus.add(marriedR);
-        groupstatus.add(unmarriedR);
-        groupstatus.add(otherR);
+        JElementsCreator.groupJRadioButtons(new JRadioButton[]{marriedR, unmarriedR, otherR});
+
 
         dateChooser = new JDateChooser();
         dateChooser.setForeground(new Color(105, 105, 105));
@@ -124,11 +120,8 @@ public class SignUpPageOne extends JFrame implements ActionListener {
         add(dateChooser);
 
 
-        getContentPane().setBackground(Color.WHITE);
-
+        JElementsCreator.setDefaultSettings(this);
         setSize(850, 800);
-        setLocation(500, 120);
-        setVisible(true);
     }
 
     //for testing purpose -> delete later
@@ -138,11 +131,11 @@ public class SignUpPageOne extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        String formno = "" + first;
+        String formno = first;
         String name = nameTF.getText();
         String fname = fatherNameTF.getText();
         String dob = ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText();
-        String gender = null;
+        String gender = "";
         if (maleR.isSelected()) {
             gender = "Male";
         } else if (femaleR.isSelected()) {
@@ -150,7 +143,7 @@ public class SignUpPageOne extends JFrame implements ActionListener {
         }
 
         String email = emailTF.getText();
-        String marital = null;
+        String marital = "";
         if (marriedR.isSelected()) {
             marital = "Married";
         } else if (unmarriedR.isSelected()) {
@@ -164,19 +157,17 @@ public class SignUpPageOne extends JFrame implements ActionListener {
         String pincode = pinCodeTF.getText();
         String state = stateTF.getText();
 
-        //todo better evaluation
+
         try {
-            if (pinCodeTF.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Fill all the required fields");
-            } else {
-                Conn c = new Conn();
+            if (GeneralUtils.checkIfAllFieldsFilled(new String[]{formno, name, fname, dob, gender, email, marital, address, city, pincode, state})) {
                 String query = "insert into signup values('" + formno + "','" + name + "','" + fname + "','" + dob + "','" + gender + "','" + email + "','" + marital + "','" + address + "','" + city + "','" + pincode + "','" + state + "')";
-                c.s.executeUpdate(query);
+                GeneralUtils.sendQuery(query);
 
-//                new Signup2(first).setVisible(true);
                 setVisible(false);
+                new SignUpPageTwo(formno).setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Fill all the required fields");
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
