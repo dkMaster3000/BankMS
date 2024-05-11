@@ -158,19 +158,16 @@ public class SignUpPageOne extends JFrame implements ActionListener {
         String state = stateTF.getText();
 
 
-        try {
-            if (GeneralUtils.checkIfAllFieldsFilled(new String[]{formno, name, fname, dob, gender, email, marital, address, city, pincode, state})) {
-                String query = "insert into signup values('" + formno + "','" + name + "','" + fname + "','" + dob + "','" + gender + "','" + email + "','" + marital + "','" + address + "','" + city + "','" + pincode + "','" + state + "')";
-                GeneralUtils.sendQuery(query);
+        if (GeneralUtils.checkIfAllFieldsFilled(new String[]{formno, name, fname, dob, gender, email, marital, address, city, pincode, state})) {
+            String query = "insert into signup values('" + formno + "','" + name + "','" + fname + "','" + dob + "','" + gender + "','" + email + "','" + marital + "','" + address + "','" + city + "','" + pincode + "','" + state + "')";
+            GeneralUtils.sendQuery(query);
 
-                setVisible(false);
-                new SignUpPageTwo(formno).setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "Fill all the required fields");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            setVisible(false);
+            new SignUpPageTwo(formno).setVisible(true);
+        } else {
+            JElementsCreator.showUnfilledFieldMessage();
         }
+
     }
 
 }

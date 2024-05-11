@@ -49,4 +49,32 @@ public class JElementsCreator {
 
         return jRadioButtonToReturn;
     }
+
+    public static void groupJRadioButtons(JRadioButton[] jRadioButtons) {
+        ButtonGroup grouper = new ButtonGroup();
+        for (JRadioButton jRadioButton : jRadioButtons) {
+            grouper.add(jRadioButton);
+        }
+    }
+
+    public static JComboBox createJComboBox(String[] options, int x, int y, int width, int height) {
+        JComboBox jComboBoxToReturn = new JComboBox(options);
+        jComboBoxToReturn.setFont(new Font("Raleway", Font.BOLD, 14));
+        jComboBoxToReturn.setBackground(Color.WHITE);
+        jComboBoxToReturn.setBounds(x, y, width, height);
+
+        return jComboBoxToReturn;
+    }
+
+    public static void setDefaultSettings(JFrame jFrame) {
+        jFrame.getContentPane().setBackground(Color.WHITE);
+
+        jFrame.setLocation(500, 120);
+        jFrame.setVisible(true);
+    }
+
+    public static void showUnfilledFieldMessage() {
+        JOptionPane.showMessageDialog(null, "Fill all the required fields");
+    }
+
 }
