@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 
 public class JElementsCreator {
 
+    private static final int defaultFontSize = 14;
+    private static final String defaultFont = "Raleway";
+
     public static JLabel createLogo() {
         ImageIcon logo = new ImageIcon(ClassLoader.getSystemResource("icons/logo.jpg"));
         Image logoScaled = logo.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT);
@@ -16,7 +19,7 @@ public class JElementsCreator {
 
     public static JLabel createJLabel(String text, int fontSize, int x, int y, int width, int height) {
         JLabel jLabelToReturn = new JLabel(text);
-        jLabelToReturn.setFont(new Font("Raleway", Font.BOLD, fontSize));
+        jLabelToReturn.setFont(new Font(defaultFont, Font.BOLD, fontSize));
         jLabelToReturn.setBounds(x, y, width, height);
 
         return jLabelToReturn;
@@ -24,7 +27,7 @@ public class JElementsCreator {
 
     public static JTextField createJTextField(int x, int y, int width, int height) {
         JTextField jTextFieldToReturn = new JTextField();
-        jTextFieldToReturn.setFont(new Font("Raleway", Font.BOLD, 14));
+        jTextFieldToReturn.setFont(new Font(defaultFont, Font.BOLD, defaultFontSize));
         jTextFieldToReturn.setBounds(x, y, width, height);
 
         return jTextFieldToReturn;
@@ -34,7 +37,7 @@ public class JElementsCreator {
         JButton buttonToReturn = new JButton(text);
         buttonToReturn.setBackground(Color.BLACK);
         buttonToReturn.setForeground(Color.WHITE);
-        buttonToReturn.setFont(new Font("Raleway", Font.BOLD, 14));
+        buttonToReturn.setFont(new Font(defaultFont, Font.BOLD, defaultFontSize));
         buttonToReturn.setBounds(x, y, width, height);
         buttonToReturn.addActionListener(al);
 
@@ -43,9 +46,16 @@ public class JElementsCreator {
 
     public static JRadioButton createJRadioButton(String text, int x, int y, int width, int height) {
         JRadioButton jRadioButtonToReturn = new JRadioButton(text);
-        jRadioButtonToReturn.setFont(new Font("Raleway", Font.BOLD, 14));
+        jRadioButtonToReturn.setFont(new Font(defaultFont, Font.BOLD, defaultFontSize));
         jRadioButtonToReturn.setBackground(Color.WHITE);
         jRadioButtonToReturn.setBounds(x, y, width, height);
+
+        return jRadioButtonToReturn;
+    }
+
+    public static JRadioButton createJRadioButton(String text, int fontSize, int x, int y, int width, int height) {
+        JRadioButton jRadioButtonToReturn = createJRadioButton(text, x, y, width, height);
+        jRadioButtonToReturn.setFont(new Font(defaultFont, Font.BOLD, fontSize));
 
         return jRadioButtonToReturn;
     }
@@ -59,11 +69,20 @@ public class JElementsCreator {
 
     public static JComboBox createJComboBox(String[] options, int x, int y, int width, int height) {
         JComboBox jComboBoxToReturn = new JComboBox(options);
-        jComboBoxToReturn.setFont(new Font("Raleway", Font.BOLD, 14));
+        jComboBoxToReturn.setFont(new Font(defaultFont, Font.BOLD, defaultFontSize));
         jComboBoxToReturn.setBackground(Color.WHITE);
         jComboBoxToReturn.setBounds(x, y, width, height);
 
         return jComboBoxToReturn;
+    }
+
+    public static JCheckBox createJCheckBox(String text, int fontSize, int x, int y, int width, int height) {
+        JCheckBox jCheckBoxToReturn = new JCheckBox(text);
+        jCheckBoxToReturn.setFont(new Font(defaultFont, Font.BOLD, fontSize));
+        jCheckBoxToReturn.setBackground(Color.WHITE);
+        jCheckBoxToReturn.setBounds(x, y, width, height);
+
+        return jCheckBoxToReturn;
     }
 
     public static void setDefaultSettings(JFrame jFrame) {

@@ -147,7 +147,7 @@ public class SignUpPageTwo extends JFrame implements ActionListener {
             String query = "insert into signup2 values('" + formno + "','" + religion + "','" + category + "','" + income + "','" + education + "','" + occupation + "','" + socialNumber + "','" + phoneNumber + "','" + seniorCitizen + "','" + existingAccount + "')";
             GeneralUtils.sendQuery(query);
 
-//                new Signup3(formno).setVisible(true);
+            new SignUpPageThree(formno).setVisible(true);
             setVisible(false);
         } else {
             JElementsCreator.showUnfilledFieldMessage();
