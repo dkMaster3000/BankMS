@@ -77,6 +77,7 @@ public class Deposit extends JFrame implements ActionListener {
 
     }
 
+    //todo for all pages
     private void backToTransactions() {
         setVisible(false);
         new Transactions(pin).setVisible(true);
