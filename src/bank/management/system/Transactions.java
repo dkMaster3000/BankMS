@@ -8,22 +8,20 @@ public class Transactions extends JFrame implements ActionListener {
 
     JLabel transactionsHeader;
     JButton depositB, withdrawlB, fastCashB, statementB, pinChangeB, balanceB, exitB;
-    String pin;
+    String pin; //todo with cardnumber and not pin
+
 
     Transactions(String pin) {
         this.pin = pin;
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/atm.jpg"));
-        Image i2 = i1.getImage().getScaledInstance(1000, 1180, Image.SCALE_DEFAULT);
-        ImageIcon i3 = new ImageIcon(i2);
-        JLabel backgroundImage = new JLabel(i3);
-        backgroundImage.setBounds(0, 0, 960, 1080);
-        add(backgroundImage);
+
+        JLabel atm = JElementsCreator.createATM();
+        add(atm);
 
         transactionsHeader = new JLabel("Please Select Your Transaction");
         transactionsHeader.setForeground(Color.WHITE);
         transactionsHeader.setFont(new Font("System", Font.BOLD, 16));
         transactionsHeader.setBounds(235, 400, 700, 35);
-        backgroundImage.add(transactionsHeader);
+        atm.add(transactionsHeader);
 
 
         depositB = new JButton("DEPOSIT");
@@ -49,13 +47,13 @@ public class Transactions extends JFrame implements ActionListener {
         exitB.setBounds(390, 633, 150, 35);
 
 
-        backgroundImage.add(depositB);
-        backgroundImage.add(withdrawlB);
-        backgroundImage.add(fastCashB);
-        backgroundImage.add(statementB);
-        backgroundImage.add(pinChangeB);
-        backgroundImage.add(balanceB);
-        backgroundImage.add(exitB);
+        atm.add(depositB);
+        atm.add(withdrawlB);
+        atm.add(fastCashB);
+        atm.add(statementB);
+        atm.add(pinChangeB);
+        atm.add(balanceB);
+        atm.add(exitB);
 
         depositB.addActionListener(this);
         withdrawlB.addActionListener(this);
@@ -78,7 +76,7 @@ public class Transactions extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == depositB) {
             setVisible(false);
-//            new Deposit(pin).setVisible(true);
+            new Deposit(pin).setVisible(true);
         } else if (ae.getSource() == withdrawlB) {
             setVisible(false);
 //            new Withdrawl(pin).setVisible(true);

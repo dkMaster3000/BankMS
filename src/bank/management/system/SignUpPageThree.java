@@ -164,14 +164,15 @@ public class SignUpPageThree extends JFrame implements ActionListener {
 
                 JOptionPane.showMessageDialog(null, "Card Number: " + cardno + "\n Pin:" + pin);
 
-//                    new Deposit(pin).setVisible(true);
+                new Deposit(pin).setVisible(true);
                 setVisible(false);
             } else {
                 JElementsCreator.showUnfilledFieldMessage();
             }
 
         } else if (ae.getSource() == cancelButton) {
-            System.exit(0);
+            setVisible(false); //TODO every page should have a cancel button
+            new Login().setVisible(true);
         }
 
     }
