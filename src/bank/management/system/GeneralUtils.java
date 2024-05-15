@@ -53,7 +53,7 @@ public class GeneralUtils {
 
         if (balance > Integer.parseInt(amount)) {
             Date date = new Date();
-            String query = "insert into bank values('" + pin + "', '" + date + "', '" + DatabaseStrings.withdrawalTypeS + "', '" + amount + "')";
+            String query = "insert into " + DatabaseStrings.bankTableS + " values('" + pin + "', '" + date + "', '" + DatabaseStrings.withdrawalTypeS + "', '" + amount + "')";
             GeneralUtils.sendQuery(query);
 
             JOptionPane.showMessageDialog(null, amount + ATMJElementsCreator.currencySign + " Debited Successfully");

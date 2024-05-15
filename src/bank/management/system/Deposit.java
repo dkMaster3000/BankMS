@@ -39,7 +39,7 @@ public class Deposit extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please enter the Amount to you want to Deposit");
             } else {
                 Date date = new Date();
-                String query = "insert into bank values('" + pin + "', '" + date + "', 'Deposit', '" + amount + "')";
+                String query = "insert into " + DatabaseStrings.bankTableS + " values('" + pin + "', '" + date + "', '" + DatabaseStrings.depositTypeS + "', '" + amount + "')";
                 GeneralUtils.sendQuery(query);
 
                 JOptionPane.showMessageDialog(null, amount + ATMJElementsCreator.currencySign + " Deposited Successfully");
