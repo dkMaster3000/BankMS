@@ -17,15 +17,6 @@ public class JElementsCreator {
         return new JLabel(logoIconScaled);
     }
 
-    public static JLabel createATM() {
-        ImageIcon atm = new ImageIcon(ClassLoader.getSystemResource("icons/atm.jpg"));
-        Image atmScaled = atm.getImage().getScaledInstance(1000, 1180, Image.SCALE_DEFAULT);
-        ImageIcon atmIconScaled = new ImageIcon(atmScaled);
-        JLabel atmIconScaledJ = new JLabel(atmIconScaled);
-        atmIconScaledJ.setBounds(0, 0, 960, 1080);
-
-        return atmIconScaledJ;
-    }
 
     public static JLabel createJLabel(String text, int fontSize, int x, int y, int width, int height) {
         JLabel jLabelToReturn = new JLabel(text);

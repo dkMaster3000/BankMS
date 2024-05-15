@@ -1,6 +1,5 @@
 package bank.management.system;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -14,63 +13,20 @@ public class Transactions extends JFrame implements ActionListener {
     Transactions(String pin) {
         this.pin = pin;
 
-        JLabel atm = JElementsCreator.createATM();
+        JLabel atm = ATMJElementsCreator.createATM();
         add(atm);
 
-        transactionsHeader = new JLabel("Please Select Your Transaction");
-        transactionsHeader.setForeground(Color.WHITE);
-        transactionsHeader.setFont(new Font("System", Font.BOLD, 16));
-        transactionsHeader.setBounds(235, 400, 700, 35);
-        atm.add(transactionsHeader);
+        transactionsHeader = ATMJElementsCreator.createATMJLabel("Please Select Your Transaction", 235, 400, 700, 35, atm);
 
+        depositB = ATMJElementsCreator.createATMJButton("DEPOSIT", 170, 499, atm, this);
+        withdrawlB = ATMJElementsCreator.createATMJButton("CASH WITHDRAWL", 390, 499, atm, this);
+        fastCashB = ATMJElementsCreator.createATMJButton("FAST CASH", 170, 543, atm, this);
+        statementB = ATMJElementsCreator.createATMJButton("MINI STATEMENT", 390, 543, atm, this);
+        pinChangeB = ATMJElementsCreator.createATMJButton("PIN CHANGE", 170, 588, atm, this);
+        balanceB = ATMJElementsCreator.createATMJButton("BALANCE ENQUIRY", 390, 588, atm, this);
+        exitB = ATMJElementsCreator.createATMJButton("EXIT", 390, 633, atm, this);
 
-        depositB = new JButton("DEPOSIT");
-        withdrawlB = new JButton("CASH WITHDRAWL");
-        fastCashB = new JButton("FAST CASH");
-        statementB = new JButton("MINI STATEMENT");
-        pinChangeB = new JButton("PIN CHANGE");
-        balanceB = new JButton("BALANCE ENQUIRY");
-        exitB = new JButton("EXIT");
-
-        depositB.setBounds(170, 499, 150, 35);
-
-        withdrawlB.setBounds(390, 499, 150, 35);
-
-        fastCashB.setBounds(170, 543, 150, 35);
-
-        statementB.setBounds(390, 543, 150, 35);
-
-        pinChangeB.setBounds(170, 588, 150, 35);
-
-        balanceB.setBounds(390, 588, 150, 35);
-
-        exitB.setBounds(390, 633, 150, 35);
-
-
-        atm.add(depositB);
-        atm.add(withdrawlB);
-        atm.add(fastCashB);
-        atm.add(statementB);
-        atm.add(pinChangeB);
-        atm.add(balanceB);
-        atm.add(exitB);
-
-        depositB.addActionListener(this);
-        withdrawlB.addActionListener(this);
-        fastCashB.addActionListener(this);
-        statementB.addActionListener(this);
-        pinChangeB.addActionListener(this);
-        balanceB.addActionListener(this);
-        exitB.addActionListener(this);
-
-        setLayout(null);
-
-        setSize(960, 1080);
-        setLocation(500, 0);
-        setUndecorated(true);
-        setVisible(true);
-
-
+        ATMJElementsCreator.setATMDefaultSettings(this);
     }
 
     public void actionPerformed(ActionEvent ae) {
@@ -79,7 +35,7 @@ public class Transactions extends JFrame implements ActionListener {
             new Deposit(pin).setVisible(true);
         } else if (ae.getSource() == withdrawlB) {
             setVisible(false);
-            new Withdrawl(pin).setVisible(true);
+            new Withdrawal(pin).setVisible(true);
         } else if (ae.getSource() == fastCashB) {
             setVisible(false);
             new FastCash(pin).setVisible(true);

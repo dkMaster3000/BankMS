@@ -6,56 +6,32 @@ import javax.swing.*;
 import java.util.Date;
 import java.sql.*;
 
-public class Withdrawl extends JFrame implements ActionListener {
+public class Withdrawal extends JFrame implements ActionListener {
 
     JTextField amountTF;
     JButton withdrawB, backB;
-    JLabel maxWithdrawlInfoL, amountL;
+    JLabel maxWithdrawalInfoL, amountL;
     String pin;
 
-    Withdrawl(String pin) {
+    Withdrawal(String pin) {
         this.pin = pin;
 
-        JLabel atm = JElementsCreator.createATM();
+        JLabel atm = ATMJElementsCreator.createATM();
         add(atm);
 
-        maxWithdrawlInfoL = new JLabel("MAXIMUM WITHDRAWAL IS 10,000$");
-        maxWithdrawlInfoL.setForeground(Color.WHITE);
-        maxWithdrawlInfoL.setFont(new Font("System", Font.BOLD, 16));
-        maxWithdrawlInfoL.setBounds(190, 350, 400, 20);
-        atm.add(maxWithdrawlInfoL);
+        maxWithdrawalInfoL = ATMJElementsCreator.createATMJLabel("MAXIMUM WITHDRAWAL IS 10,000$", 190, 350, 400, 20, atm);
 
-        amountL = new JLabel("PLEASE ENTER YOUR AMOUNT");
-        amountL.setForeground(Color.WHITE);
-        amountL.setFont(new Font("System", Font.BOLD, 16));
-        amountL.setBounds(190, 400, 400, 20);
-        atm.add(amountL);
+        amountL = ATMJElementsCreator.createATMJLabel("PLEASE ENTER YOUR AMOUNT", 190, 400, 400, 20, atm);
 
         amountTF = new JTextField();
         amountTF.setFont(new Font("Raleway", Font.BOLD, 25));
         amountTF.setBounds(190, 450, 330, 30);
         atm.add(amountTF);
 
-        withdrawB = new JButton("WITHDRAW");
-        backB = new JButton("BACK");
+        withdrawB = ATMJElementsCreator.createATMJButton("WITHDRAW", 390, 588, atm, this);
+        backB = ATMJElementsCreator.createATMJButton("BACK", 390, 633, atm, this);
 
-
-        withdrawB.setBounds(390, 588, 150, 35);
-
-        backB.setBounds(390, 633, 150, 35);
-
-        atm.add(withdrawB);
-        atm.add(backB);
-
-        withdrawB.addActionListener(this);
-        backB.addActionListener(this);
-
-        setLayout(null);
-
-        setSize(960, 1080);
-        setLocation(500, 0);
-        setUndecorated(true);
-        setVisible(true);
+        ATMJElementsCreator.setATMDefaultSettings(this);
     }
 
 
@@ -64,7 +40,7 @@ public class Withdrawl extends JFrame implements ActionListener {
             String amount = amountTF.getText();
             Date date = new Date();
             if (ae.getSource() == withdrawB) {
-                if (amountTF.getText().equals("")) {
+                if (amountTF.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Please enter the Amount to you want to Withdraw");
                 } else {
                     Conn c1 = new Conn();
@@ -105,7 +81,7 @@ public class Withdrawl extends JFrame implements ActionListener {
 
 
     public static void main(String[] args) {
-        new Withdrawl("").setVisible(true);
+        new Withdrawal("").setVisible(true);
     }
 
 }

@@ -15,48 +15,29 @@ public class Deposit extends JFrame implements ActionListener {
     Deposit(String pin) {
         this.pin = pin;
 
-        JLabel atm = JElementsCreator.createATM();
+        JLabel atm = ATMJElementsCreator.createATM();
         add(atm);
 
-        amountL = new JLabel("ENTER AMOUNT YOU WANT TO DEPOSIT");
-        amountL.setForeground(Color.WHITE);
-        amountL.setFont(new Font("System", Font.BOLD, 16));
-        amountL.setBounds(190, 350, 400, 35);
-        atm.add(amountL);
+        amountL = ATMJElementsCreator.createATMJLabel("ENTER AMOUNT YOU WANT TO DEPOSIT", 190, 350, 400, 35, atm);
 
         amountTF = new JTextField();
         amountTF.setFont(new Font("Raleway", Font.BOLD, 22));
         amountTF.setBounds(190, 420, 320, 25);
         atm.add(amountTF);
 
-        depositB = new JButton("DEPOSIT");
-        backB = new JButton("BACK");
-
-        depositB.setBounds(390, 588, 150, 35);
-
-        backB.setBounds(390, 633, 150, 35);
-
-        atm.add(depositB);
-        atm.add(backB);
-
-        depositB.addActionListener(this);
-        backB.addActionListener(this);
+        depositB = ATMJElementsCreator.createATMJButton("DEPOSIT", 390, 588, atm, this);
+        backB = ATMJElementsCreator.createATMJButton("BACK", 390, 633, atm, this);
 
 
-        setLayout(null);
-
-        setSize(960, 1080);
-        setUndecorated(true);
-        setLocation(500, 0);
-        setVisible(true);
+        ATMJElementsCreator.setATMDefaultSettings(this);
     }
 
     public void actionPerformed(ActionEvent ae) {
         try {
-            String amount = amountTF.getText(); //todo only numbers allowed
+            String amount = amountTF.getText();
             Date date = new Date();
             if (ae.getSource() == depositB) {
-                if (amountTF.getText().equals("")) {
+                if (amountTF.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Please enter the Amount to you want to Deposit");
                 } else {
                     String query = "insert into bank values('" + pin + "', '" + date + "', 'Deposit', '" + amount + "')";

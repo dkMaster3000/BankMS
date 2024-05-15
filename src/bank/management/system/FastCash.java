@@ -24,59 +24,20 @@ public class FastCash extends JFrame implements ActionListener {
     FastCash(String pin) {
         this.pin = pin;
 
-        JLabel atm = JElementsCreator.createATM();
+        JLabel atm = ATMJElementsCreator.createATM();
         add(atm);
 
-        amountL = new JLabel("SELECT WITHDRAWL AMOUNT");
-        amountL.setForeground(Color.WHITE);
-        amountL.setFont(new Font("System", Font.BOLD, 16));
-        amountL.setBounds(235, 400, 700, 35);
-        atm.add(amountL);
+        amountL = ATMJElementsCreator.createATMJLabel("SELECT WITHDRAWAL AMOUNT", 235, 400, 700, 35, atm);
 
-        a20B = new JButton(dollar20 + currencySign);
-        a50B = new JButton(dollar50 + currencySign);
-        a100B = new JButton(dollar100 + currencySign);
-        a200B = new JButton(dollar200 + currencySign);
-        a500B = new JButton(dollar500 + currencySign);
-        a1000B = new JButton(dollar1000 + currencySign);
-        backB = new JButton("BACK");
+        a20B = ATMJElementsCreator.createATMJButton(dollar20 + currencySign, 170, 499, atm, this);
+        a50B = ATMJElementsCreator.createATMJButton(dollar50 + currencySign, 390, 499, atm, this);
+        a100B = ATMJElementsCreator.createATMJButton(dollar100 + currencySign, 170, 543, atm, this);
+        a200B = ATMJElementsCreator.createATMJButton(dollar200 + currencySign, 390, 543, atm, this);
+        a500B = ATMJElementsCreator.createATMJButton(dollar500 + currencySign, 170, 588, atm, this);
+        a1000B = ATMJElementsCreator.createATMJButton(dollar1000 + currencySign, 390, 588, atm, this);
+        backB = ATMJElementsCreator.createATMJButton("BACK", 390, 633, atm, this);
 
-        setLayout(null);
-
-
-        a20B.setBounds(170, 499, 150, 35);
-        atm.add(a20B);
-
-        a50B.setBounds(390, 499, 150, 35);
-        atm.add(a50B);
-
-        a100B.setBounds(170, 543, 150, 35);
-        atm.add(a100B);
-
-        a200B.setBounds(390, 543, 150, 35);
-        atm.add(a200B);
-
-        a500B.setBounds(170, 588, 150, 35);
-        atm.add(a500B);
-
-        a1000B.setBounds(390, 588, 150, 35);
-        atm.add(a1000B);
-
-        backB.setBounds(390, 633, 150, 35);
-        atm.add(backB);
-
-        a20B.addActionListener(this);
-        a50B.addActionListener(this);
-        a100B.addActionListener(this);
-        a200B.addActionListener(this);
-        a500B.addActionListener(this);
-        a1000B.addActionListener(this);
-        backB.addActionListener(this);
-
-        setSize(960, 1080);
-        setLocation(500, 0);
-        setUndecorated(true);
-        setVisible(true);
+        ATMJElementsCreator.setATMDefaultSettings(this);
 
     }
 
@@ -126,7 +87,7 @@ public class FastCash extends JFrame implements ActionListener {
             case dollar200 + currencySign -> dollar200;
             case dollar500 + currencySign -> dollar500;
             case dollar1000 + currencySign -> dollar1000;
-            default -> dollar20;
+            default -> 0;
         };
 
         return String.valueOf(amount);
