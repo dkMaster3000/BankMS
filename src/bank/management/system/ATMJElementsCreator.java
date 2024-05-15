@@ -69,6 +69,15 @@ public class ATMJElementsCreator {
         return jTextFieldToReturn;
     }
 
+    public static JPasswordField createJPasswordField(int x, int y, int width, int height, JLabel atm) {
+        JPasswordField jPasswordFieldToReturn = new JPasswordField();
+        jPasswordFieldToReturn.setFont(new Font(defaultFontTF, Font.BOLD, 25));
+        jPasswordFieldToReturn.setBounds(x, y, width, height);
+        atm.add(jPasswordFieldToReturn);
+
+        return jPasswordFieldToReturn;
+    }
+
     public static void setATMDefaultSettings(JFrame jFrame) {
         jFrame.setLayout(null);
 
