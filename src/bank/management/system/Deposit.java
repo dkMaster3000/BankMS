@@ -1,6 +1,5 @@
 package bank.management.system;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
@@ -20,48 +19,34 @@ public class Deposit extends JFrame implements ActionListener {
 
         amountL = ATMJElementsCreator.createATMJLabel("ENTER AMOUNT YOU WANT TO DEPOSIT", 190, 350, 400, 35, atm);
 
-        amountTF = new JTextField();
-        amountTF.setFont(new Font("Raleway", Font.BOLD, 22));
-        amountTF.setBounds(190, 420, 320, 25);
-        atm.add(amountTF);
+        amountTF = ATMJElementsCreator.createJTextField(22, 190, 420, 320, 25, atm);
 
-        depositB = ATMJElementsCreator.createATMJButton("DEPOSIT", 390, 588, atm, this);
-        backB = ATMJElementsCreator.createATMJButton("BACK", 390, 633, atm, this);
+        depositB = ATMJElementsCreator.createATMJButton("DEPOSIT", ATMJElementsCreator.buttonColumn2, ATMJElementsCreator.buttonRow3, atm, this);
+        backB = ATMJElementsCreator.createATMBackJButton(atm, this);
 
 
         ATMJElementsCreator.setATMDefaultSettings(this);
     }
 
     public void actionPerformed(ActionEvent ae) {
-        try {
+
+        if (ae.getSource() == backB) {
+            ATMJElementsCreator.forwardToTransactions(pin, this);
+        } else {
             String amount = amountTF.getText();
-            Date date = new Date();
-            if (ae.getSource() == depositB) {
-                if (amountTF.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Please enter the Amount to you want to Deposit");
-                } else {
-                    String query = "insert into bank values('" + pin + "', '" + date + "', 'Deposit', '" + amount + "')";
-                    GeneralUtils.sendQuery(query);
 
-                    JOptionPane.showMessageDialog(null, amount + "$ Deposited Successfully");
-
-                    backToTransactions();
-                }
-            } else if (ae.getSource() == backB) {
-                backToTransactions();
+            if (amountTF.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please enter the Amount to you want to Deposit");
             } else {
-                System.out.println("There is not such an action.");
+                Date date = new Date();
+                String query = "insert into bank values('" + pin + "', '" + date + "', 'Deposit', '" + amount + "')";
+                GeneralUtils.sendQuery(query);
+
+                JOptionPane.showMessageDialog(null, amount + ATMJElementsCreator.currencySign + " Deposited Successfully");
+
+                ATMJElementsCreator.forwardToTransactions(pin, this);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
-    }
-
-    //todo for all pages
-    private void backToTransactions() {
-        setVisible(false);
-        new Transactions(pin).setVisible(true);
     }
 
     public static void main(String[] args) {

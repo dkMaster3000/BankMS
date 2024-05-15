@@ -18,13 +18,13 @@ public class Transactions extends JFrame implements ActionListener {
 
         transactionsHeader = ATMJElementsCreator.createATMJLabel("Please Select Your Transaction", 235, 400, 700, 35, atm);
 
-        depositB = ATMJElementsCreator.createATMJButton("DEPOSIT", 170, 499, atm, this);
-        withdrawlB = ATMJElementsCreator.createATMJButton("CASH WITHDRAWL", 390, 499, atm, this);
-        fastCashB = ATMJElementsCreator.createATMJButton("FAST CASH", 170, 543, atm, this);
-        statementB = ATMJElementsCreator.createATMJButton("MINI STATEMENT", 390, 543, atm, this);
-        pinChangeB = ATMJElementsCreator.createATMJButton("PIN CHANGE", 170, 588, atm, this);
-        balanceB = ATMJElementsCreator.createATMJButton("BALANCE ENQUIRY", 390, 588, atm, this);
-        exitB = ATMJElementsCreator.createATMJButton("EXIT", 390, 633, atm, this);
+        depositB = ATMJElementsCreator.createATMJButton("DEPOSIT", ATMJElementsCreator.buttonColumn1, ATMJElementsCreator.buttonRow1, atm, this);
+        withdrawlB = ATMJElementsCreator.createATMJButton("CASH WITHDRAWL", ATMJElementsCreator.buttonColumn2, ATMJElementsCreator.buttonRow1, atm, this);
+        fastCashB = ATMJElementsCreator.createATMJButton("FAST CASH", ATMJElementsCreator.buttonColumn1, ATMJElementsCreator.buttonRow2, atm, this);
+        statementB = ATMJElementsCreator.createATMJButton("MINI STATEMENT", ATMJElementsCreator.buttonColumn2, ATMJElementsCreator.buttonRow2, atm, this);
+        pinChangeB = ATMJElementsCreator.createATMJButton("PIN CHANGE", ATMJElementsCreator.buttonColumn1, ATMJElementsCreator.buttonRow3, atm, this);
+        balanceB = ATMJElementsCreator.createATMJButton("BALANCE ENQUIRY", ATMJElementsCreator.buttonColumn2, ATMJElementsCreator.buttonRow3, atm, this);
+        exitB = ATMJElementsCreator.createATMJButton("EXIT", ATMJElementsCreator.buttonColumn2, ATMJElementsCreator.buttonRow4, atm, this);
 
         ATMJElementsCreator.setATMDefaultSettings(this);
     }

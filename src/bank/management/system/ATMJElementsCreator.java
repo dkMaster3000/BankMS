@@ -7,10 +7,22 @@ import java.awt.event.ActionListener;
 public class ATMJElementsCreator {
 
     private static final int defaultFontSize = 16;
-    private static final String defaultFont = "System";
+    private static final String defaultFontSystem = "System";
+    private static final String defaultFontTF = "Raleway";
 
     private static final int defaultButtonWidth = 150;
     private static final int defaultButtonHeight = 35;
+
+    public static final String currencySign = "$";
+
+    public static final int buttonColumn1 = 170;
+    public static final int buttonColumn2 = 390;
+
+    public static final int buttonRow1 = 499;
+    public static final int buttonRow2 = 543;
+    public static final int buttonRow3 = 588;
+    public static final int buttonRow4 = 633;
+
 
     public static JLabel createATM() {
         ImageIcon atm = new ImageIcon(ClassLoader.getSystemResource("icons/atm.jpg"));
@@ -33,15 +45,28 @@ public class ATMJElementsCreator {
         return buttonToReturn;
     }
 
+    public static JButton createATMBackJButton(JLabel atm, ActionListener al) {
+        return ATMJElementsCreator.createATMJButton("BACK", ATMJElementsCreator.buttonColumn2, ATMJElementsCreator.buttonRow4, atm, al);
+    }
+
     public static JLabel createATMJLabel(String text, int x, int y, int width, int height, JLabel atm) {
         JLabel jLabelToReturn = new JLabel(text);
         jLabelToReturn.setForeground(Color.WHITE);
-        jLabelToReturn.setFont(new Font(defaultFont, Font.BOLD, defaultFontSize));
+        jLabelToReturn.setFont(new Font(defaultFontSystem, Font.BOLD, defaultFontSize));
         jLabelToReturn.setBounds(x, y, width, height);
 
         atm.add(jLabelToReturn);
 
         return jLabelToReturn;
+    }
+
+    public static JTextField createJTextField(int fontSize, int x, int y, int width, int height, JLabel atm) {
+        JTextField jTextFieldToReturn = new JTextField();
+        jTextFieldToReturn.setFont(new Font(defaultFontTF, Font.BOLD, fontSize));
+        jTextFieldToReturn.setBounds(x, y, width, height);
+        atm.add(jTextFieldToReturn);
+
+        return jTextFieldToReturn;
     }
 
     public static void setATMDefaultSettings(JFrame jFrame) {
@@ -51,5 +76,10 @@ public class ATMJElementsCreator {
         jFrame.setLocation(500, 0);
         jFrame.setUndecorated(true);
         jFrame.setVisible(true);
+    }
+
+    public static void forwardToTransactions(String pin, JFrame activeJFrame) {
+        activeJFrame.setVisible(false);
+        new Transactions(pin).setVisible(true);
     }
 }

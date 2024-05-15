@@ -56,8 +56,9 @@ public class Login extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        try {
-            if (ae.getSource() == signInButton) {
+
+        if (ae.getSource() == signInButton) {
+            try {
                 Conn c1 = new Conn();
                 String cardno = cardNoField.getText();
                 String pin = pinField.getText();
@@ -66,23 +67,23 @@ public class Login extends JFrame implements ActionListener {
                 ResultSet rs = c1.s.executeQuery(q);
 
                 if (rs.next()) {
-                    setVisible(false);
-                    new Transactions(pin).setVisible(true);
+                    ATMJElementsCreator.forwardToTransactions(pin, this);
                 } else {
                     JOptionPane.showMessageDialog(null, "Incorrect Card Number or PIN");
                 }
-            } else if (ae.getSource() == clearButton) {
-                cardNoField.setText("");
-                pinField.setText("");
-            } else if (ae.getSource() == singUpButton) {
-                setVisible(false);
-                new SignUpPageOne().setVisible(true);
-            } else {
-                System.out.println("No action found!");
+            } catch (Exception e) {
+                e.printStackTrace(System.err);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else if (ae.getSource() == clearButton) {
+            cardNoField.setText("");
+            pinField.setText("");
+        } else if (ae.getSource() == singUpButton) {
+            setVisible(false);
+            new SignUpPageOne().setVisible(true);
+        } else {
+            System.out.println("No action found!");
         }
+
     }
 
 }
