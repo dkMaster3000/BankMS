@@ -49,16 +49,23 @@ public class MiniStatement extends JFrame implements ActionListener {
         try {
             Conn c1 = new Conn();
             ResultSet rs = c1.s.executeQuery("SELECT * FROM " + DatabaseStrings.bankTableS + " where " + DatabaseStrings.cardnumberColumnS + " = '" + cardnumber + "'");
+
             while (rs.next()) {
-                String rowText = "<html>" + rs.getString(DatabaseStrings.dateColumnS) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
-                        rs.getString(DatabaseStrings.typeColumnS) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
-                        rs.getString(DatabaseStrings.amountColumnS) + "<br><br><html>";
+
+                String transactionType = rs.getString(DatabaseStrings.typeColumnS);
+                String addedSpaces = transactionType.equals(DatabaseStrings.depositTypeS) ? "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" : "";
+
+                String rowText = ("<html>" + rs.getString(DatabaseStrings.dateColumnS) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                        transactionType + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                        addedSpaces +
+                        rs.getString(DatabaseStrings.amountColumnS) + "<br><br><html>");
                 listModel.addElement(rowText);
             }
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
     }
+
 
     public void actionPerformed(ActionEvent ae) {
         this.setVisible(false);
