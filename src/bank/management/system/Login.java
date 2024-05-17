@@ -62,12 +62,12 @@ public class Login extends JFrame implements ActionListener {
                 Conn c1 = new Conn();
                 String cardno = cardNoField.getText();
                 String pin = pinField.getText();
-                String q = "select * from login where cardnumber = '" + cardno + "' and pin = '" + pin + "'";
+                String q = "select * from " + DatabaseStrings.loginTableS + " where " + DatabaseStrings.cardnumberColumnS + " = '" + cardno + "' and " + DatabaseStrings.pinColumnS + " = '" + pin + "'";
 
                 ResultSet rs = c1.s.executeQuery(q);
 
                 if (rs.next()) {
-                    ATMJElementsCreator.forwardToTransactions(pin, this);
+                    ATMJElementsCreator.forwardToTransactions(cardno, this);
                 } else {
                     JOptionPane.showMessageDialog(null, "Incorrect Card Number or PIN");
                 }
@@ -83,7 +83,5 @@ public class Login extends JFrame implements ActionListener {
         } else {
             System.out.println("No action found!");
         }
-
     }
-
 }

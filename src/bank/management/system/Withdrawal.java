@@ -8,10 +8,10 @@ public class Withdrawal extends JFrame implements ActionListener {
     JTextField amountTF;
     JButton withdrawB, backB;
     JLabel maxWithdrawalInfoL, amountL;
-    String pin;
+    String cardnumber;
 
-    Withdrawal(String pin) {
-        this.pin = pin;
+    Withdrawal(String cardnumber) {
+        this.cardnumber = cardnumber;
 
         JLabel atm = ATMJElementsCreator.createATM();
         add(atm);
@@ -32,14 +32,14 @@ public class Withdrawal extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
 
         if (ae.getSource() == backB) {
-            ATMJElementsCreator.forwardToTransactions(pin, this);
+            ATMJElementsCreator.forwardToTransactions(cardnumber, this);
         } else {
             String amount = amountTF.getText();
 
             if (amountTF.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Please enter the Amount to you want to Withdraw");
             } else {
-                GeneralUtils.handleWithdrawal(pin, amount, this);
+                GeneralUtils.handleWithdrawal(cardnumber, amount, this);
             }
 
         }

@@ -4,6 +4,7 @@ public class DatabaseStrings {
 
     public static String bankTableS = "bank";
     public static String loginTableS = "login";
+    public static String signup3TableS = "signup3";
 
     public static String typeColumnS = "type";
     public static String depositTypeS = "Deposit";

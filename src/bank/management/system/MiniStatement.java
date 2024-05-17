@@ -11,7 +11,7 @@ public class MiniStatement extends JFrame implements ActionListener {
     DefaultListModel<String> listModel = new DefaultListModel<String>(); //to add the statements
     JList<String> allStatements = new JList<>(listModel); //to present the statements in JScrollPane
 
-    MiniStatement(String pin) {
+    MiniStatement(String cardnumber) {
         super("Mini Statement");
 
         getContentPane().setBackground(Color.WHITE);
@@ -41,22 +41,14 @@ public class MiniStatement extends JFrame implements ActionListener {
         exitB.addActionListener(this);
         add(exitB);
 
-        try {
-            Conn c = new Conn();
-            ResultSet rs = c.s.executeQuery("select * from " + DatabaseStrings.loginTableS + " where pin = '" + pin + "'");
-            if (rs.next()) {
-                cardInfoL.setText("Card Number:    " + rs.getString(DatabaseStrings.cardnumberColumnS).substring(0, 4) + "XXXXXXXX" + rs.getString(DatabaseStrings.cardnumberColumnS).substring(12));
-            }
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-        }
+        cardInfoL.setText("Card Number:    " + cardnumber.substring(0, 4) + "XXXXXXXX" + cardnumber.substring(12));
 
-        int balance = GeneralUtils.getBalance(pin);
+        int balance = GeneralUtils.getBalance(cardnumber);
         totalBalanceL.setText("Your Current Account Balance is " + balance + ATMJElementsCreator.currencySign);
 
         try {
             Conn c1 = new Conn();
-            ResultSet rs = c1.s.executeQuery("SELECT * FROM " + DatabaseStrings.bankTableS + " where pin = '" + pin + "'");
+            ResultSet rs = c1.s.executeQuery("SELECT * FROM " + DatabaseStrings.bankTableS + " where " + DatabaseStrings.cardnumberColumnS + " = '" + cardnumber + "'");
             while (rs.next()) {
                 String rowText = "<html>" + rs.getString(DatabaseStrings.dateColumnS) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
                         rs.getString(DatabaseStrings.typeColumnS) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +

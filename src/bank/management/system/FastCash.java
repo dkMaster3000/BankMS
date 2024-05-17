@@ -7,7 +7,7 @@ public class FastCash extends JFrame implements ActionListener {
 
     JLabel amountL;
     JButton a20B, a50B, a100B, a200B, a500B, a1000B, backB;
-    String pin;
+    String cardnumber;
 
     private final int dollar20 = 20;
     private final int dollar50 = 50;
@@ -17,8 +17,8 @@ public class FastCash extends JFrame implements ActionListener {
     private final int dollar1000 = 1000;
 
 
-    FastCash(String pin) {
-        this.pin = pin;
+    FastCash(String cardnumber) {
+        this.cardnumber = cardnumber;
 
         JLabel atm = ATMJElementsCreator.createATM();
         add(atm);
@@ -39,11 +39,11 @@ public class FastCash extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == backB) {
-            ATMJElementsCreator.forwardToTransactions(pin, this);
+            ATMJElementsCreator.forwardToTransactions(cardnumber, this);
         } else {
             String amount = getAmount(((JButton) ae.getSource()).getText());
 
-            GeneralUtils.handleWithdrawal(pin, amount, this);
+            GeneralUtils.handleWithdrawal(cardnumber, amount, this);
         }
     }
 

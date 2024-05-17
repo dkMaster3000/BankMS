@@ -8,15 +8,15 @@ class BalanceEnquiry extends JFrame implements ActionListener {
 
     JButton backB;
     JLabel currentBalance;
-    String pin;
+    String cardnumber;
 
-    BalanceEnquiry(String pin) {
-        this.pin = pin;
+    BalanceEnquiry(String cardnumber) {
+        this.cardnumber = cardnumber;
 
         JLabel atm = ATMJElementsCreator.createATM();
         add(atm);
 
-        int balance = GeneralUtils.getBalance(pin);
+        int balance = GeneralUtils.getBalance(cardnumber);
 
         currentBalance = ATMJElementsCreator.createATMJLabel("Your Current Account Balance is " + balance + ATMJElementsCreator.currencySign, 190, 350, 400, 35, atm);
 
@@ -26,7 +26,7 @@ class BalanceEnquiry extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent ae) {
-        ATMJElementsCreator.forwardToTransactions(pin, this);
+        ATMJElementsCreator.forwardToTransactions(cardnumber, this);
     }
 
     public static void main(String[] args) {

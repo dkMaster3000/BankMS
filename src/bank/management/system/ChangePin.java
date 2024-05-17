@@ -8,10 +8,10 @@ public class ChangePin extends JFrame implements ActionListener {
     JPasswordField newPinPF, repeatNewPinPF;
     JButton changeB, backB;
     JLabel changePinHeaderL, newPinL, repeatNewPinL;
-    String pin;
+    String cardnumber;
 
-    ChangePin(String pin) {
-        this.pin = pin;
+    ChangePin(String cardnumber) {
+        this.cardnumber = cardnumber;
 
         JLabel atm = ATMJElementsCreator.createATM();
         add(atm);
@@ -39,7 +39,7 @@ public class ChangePin extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
 
         if (ae.getSource() == backB) {
-            ATMJElementsCreator.forwardToTransactions(pin, this);
+            ATMJElementsCreator.forwardToTransactions(cardnumber, this);
         } else {
             String newPin = newPinPF.getText();
             String repeatedPin = repeatNewPinPF.getText();
@@ -54,17 +54,16 @@ public class ChangePin extends JFrame implements ActionListener {
                 return;
             }
 
-            String query1 = "update bank set " + DatabaseStrings.pinColumnS + " = '" + newPin + "' where " + DatabaseStrings.pinColumnS + " = '" + pin + "' ";
-            String query2 = "update login set " + DatabaseStrings.pinColumnS + " = '" + newPin + "' where " + DatabaseStrings.pinColumnS + " = '" + pin + "' ";
-            String query3 = "update signup3 set " + DatabaseStrings.pinColumnS + " = '" + newPin + "' where " + DatabaseStrings.pinColumnS + " = '" + pin + "' ";
+
+            String query1 = "update " + DatabaseStrings.loginTableS + " set " + DatabaseStrings.pinColumnS + " = '" + newPin + "' where " + DatabaseStrings.cardnumberColumnS + " = '" + cardnumber + "' ";
+            String query2 = "update " + DatabaseStrings.signup3TableS + " set " + DatabaseStrings.pinColumnS + " = '" + newPin + "' where " + DatabaseStrings.cardnumberColumnS + " = '" + cardnumber + "' ";
 
             GeneralUtils.sendQuery(query1);
             GeneralUtils.sendQuery(query2);
-            GeneralUtils.sendQuery(query3);
 
             JOptionPane.showMessageDialog(null, "PIN changed successfully");
 
-            ATMJElementsCreator.forwardToTransactions(newPin, this);
+            ATMJElementsCreator.forwardToTransactions(cardnumber, this);
 
         }
     }

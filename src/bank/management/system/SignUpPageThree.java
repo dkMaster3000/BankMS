@@ -156,10 +156,10 @@ public class SignUpPageThree extends JFrame implements ActionListener {
         if (ae.getSource() == submitButton) {
             if (GeneralUtils.checkIfAllFieldsFilled(new String[]{atype, cardno, pin, declaration})) {
 
-                String query1 = "insert into signup3 values('" + formno + "','" + atype + "','" + cardno + "','" + pin + "','" + facility + "')";
+                String query1 = "insert into " + DatabaseStrings.signup3TableS + " values('" + formno + "','" + atype + "','" + cardno + "','" + pin + "','" + facility + "')";
                 GeneralUtils.sendQuery(query1);
 
-                String query2 = "insert into login values('" + formno + "','" + cardno + "','" + pin + "')";
+                String query2 = "insert into " + DatabaseStrings.loginTableS + " values('" + formno + "','" + cardno + "','" + pin + "')";
                 GeneralUtils.sendQuery(query2);
 
                 JOptionPane.showMessageDialog(null, "Card Number: " + cardno + "\n Pin:" + pin);
@@ -171,7 +171,7 @@ public class SignUpPageThree extends JFrame implements ActionListener {
             }
 
         } else if (ae.getSource() == cancelButton) {
-            setVisible(false); //TODO every page should have a cancel button
+            setVisible(false);
             new Login().setVisible(true);
         }
 

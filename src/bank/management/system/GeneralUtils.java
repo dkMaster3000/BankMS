@@ -24,12 +24,12 @@ public class GeneralUtils {
         }
     }
 
-    public static int getBalance(String pin) {
+    public static int getBalance(String cardnumber) {
         int balance = 0;
         try {
             Conn c = new Conn();
 
-            ResultSet rs = c.s.executeQuery("select * from bank where pin = '" + pin + "'");
+            ResultSet rs = c.s.executeQuery("select * from " + DatabaseStrings.bankTableS + " where " + DatabaseStrings.cardnumberColumnS + " = '" + cardnumber + "'");
 
             while (rs.next()) {
 
@@ -48,17 +48,17 @@ public class GeneralUtils {
         return balance;
     }
 
-    public static void handleWithdrawal(String pin, String amount, JFrame activeJFrame) {
-        int balance = getBalance(pin);
+    public static void handleWithdrawal(String cardnumber, String amount, JFrame activeJFrame) {
+        int balance = getBalance(cardnumber);
 
         if (balance > Integer.parseInt(amount)) {
             Date date = new Date();
-            String query = "insert into " + DatabaseStrings.bankTableS + " values('" + pin + "', '" + date + "', '" + DatabaseStrings.withdrawalTypeS + "', '" + amount + "')";
+            String query = "insert into " + DatabaseStrings.bankTableS + " values('" + cardnumber + "', '" + date + "', '" + DatabaseStrings.withdrawalTypeS + "', '" + amount + "')";
             GeneralUtils.sendQuery(query);
 
             JOptionPane.showMessageDialog(null, amount + ATMJElementsCreator.currencySign + " Debited Successfully");
 
-            ATMJElementsCreator.forwardToTransactions(pin, activeJFrame);
+            ATMJElementsCreator.forwardToTransactions(cardnumber, activeJFrame);
         } else {
             JOptionPane.showMessageDialog(null, "Insufficient Balance");
         }

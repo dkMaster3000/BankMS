@@ -9,10 +9,10 @@ public class Deposit extends JFrame implements ActionListener {
     JTextField amountTF;
     JButton depositB, backB;
     JLabel amountL;
-    String pin;
+    String cardnumber;
 
-    Deposit(String pin) {
-        this.pin = pin;
+    Deposit(String cardnumber) {
+        this.cardnumber = cardnumber;
 
         JLabel atm = ATMJElementsCreator.createATM();
         add(atm);
@@ -31,7 +31,7 @@ public class Deposit extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
 
         if (ae.getSource() == backB) {
-            ATMJElementsCreator.forwardToTransactions(pin, this);
+            ATMJElementsCreator.forwardToTransactions(cardnumber, this);
         } else {
             String amount = amountTF.getText();
 
@@ -39,12 +39,12 @@ public class Deposit extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please enter the Amount to you want to Deposit");
             } else {
                 Date date = new Date();
-                String query = "insert into " + DatabaseStrings.bankTableS + " values('" + pin + "', '" + date + "', '" + DatabaseStrings.depositTypeS + "', '" + amount + "')";
+                String query = "insert into " + DatabaseStrings.bankTableS + " values('" + cardnumber + "', '" + date + "', '" + DatabaseStrings.depositTypeS + "', '" + amount + "')";
                 GeneralUtils.sendQuery(query);
 
                 JOptionPane.showMessageDialog(null, amount + ATMJElementsCreator.currencySign + " Deposited Successfully");
 
-                ATMJElementsCreator.forwardToTransactions(pin, this);
+                ATMJElementsCreator.forwardToTransactions(cardnumber, this);
             }
         }
     }
