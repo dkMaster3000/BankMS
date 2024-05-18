@@ -1,8 +1,8 @@
 package bank.management.system;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.sql.ResultSet;
 import java.util.*;
 
 public class SignUpPageThree extends JFrame implements ActionListener {
@@ -123,14 +123,71 @@ public class SignUpPageThree extends JFrame implements ActionListener {
             atype = "";
         }
 
-        Random ran = new Random();
-        long first7 = (ran.nextLong() % 90000000L) + 5040936000000000L;
-        String cardno = "" + Math.abs(first7);
+        String cardnumber = generateUniqueCardNumber();
 
-        long first3 = (ran.nextLong() % 9000L) + 1000L;
-        String pin = "" + Math.abs(first3);
+        int fourDigitNumber = (int) (Math.random() * 9000) + 1000;
+        String pin = String.valueOf(fourDigitNumber);
 
-        ArrayList<String> chosenFacility = new ArrayList<String>();
+        ArrayList<String> chosenFacility = getFacilityStrings();
+        String facility = String.join(",", chosenFacility);
+
+        String declaration = declarationCB.isSelected() ? "selected" : "";
+
+        if (ae.getSource() == submitButton) {
+            if (GeneralUtils.checkIfAllFieldsFilled(new String[]{atype, cardnumber, pin, declaration})) {
+
+                String query1 = "insert into " + DatabaseStrings.signup3TableS + " values('" + formno + "','" + atype + "','" + cardnumber + "','" + pin + "','" + facility + "')";
+                GeneralUtils.sendQuery(query1);
+
+                String query2 = "insert into " + DatabaseStrings.loginTableS + " values('" + formno + "','" + cardnumber + "','" + pin + "')";
+                GeneralUtils.sendQuery(query2);
+
+                JOptionPane.showMessageDialog(null, "Card Number: " + cardnumber + "\n Pin:" + pin);
+
+                new Deposit(cardnumber).setVisible(true);
+                setVisible(false);
+            } else {
+                JElementsCreator.showUnfilledFieldMessage();
+            }
+
+        } else if (ae.getSource() == cancelButton) {
+            setVisible(false);
+            new Login().setVisible(true);
+        }
+
+    }
+
+    private String generateSixteenDigitNumber() {
+        int nineDigitNumber = (int) (Math.random() * 900000000) + 100000000;
+        long sixteenDigitNumber = 5040936000000000L + nineDigitNumber;
+
+        return String.valueOf(sixteenDigitNumber);
+    }
+
+    private String generateUniqueCardNumber() {
+
+        String cardN = generateSixteenDigitNumber();
+
+        try {
+            Conn c = new Conn();
+
+            ResultSet rs = c.s.executeQuery("select * from " + DatabaseStrings.loginTableS);
+
+            while (rs.next()) {
+                if (cardN.equals(rs.getString(DatabaseStrings.cardnumberColumnS))) {
+                    return generateUniqueCardNumber();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
+
+        return cardN;
+    }
+
+    private ArrayList<String> getFacilityStrings() {
+        ArrayList<String> chosenFacility = new ArrayList<>();
         if (atmCardCB.isSelected()) {
             chosenFacility.add(" ATM Card");
         }
@@ -149,32 +206,7 @@ public class SignUpPageThree extends JFrame implements ActionListener {
         if (estatementCB.isSelected()) {
             chosenFacility.add(" E-Statement");
         }
-        String facility = String.join(",", chosenFacility);
-
-        String declaration = declarationCB.isSelected() ? "selected" : "";
-
-        if (ae.getSource() == submitButton) {
-            if (GeneralUtils.checkIfAllFieldsFilled(new String[]{atype, cardno, pin, declaration})) {
-
-                String query1 = "insert into " + DatabaseStrings.signup3TableS + " values('" + formno + "','" + atype + "','" + cardno + "','" + pin + "','" + facility + "')";
-                GeneralUtils.sendQuery(query1);
-
-                String query2 = "insert into " + DatabaseStrings.loginTableS + " values('" + formno + "','" + cardno + "','" + pin + "')";
-                GeneralUtils.sendQuery(query2);
-
-                JOptionPane.showMessageDialog(null, "Card Number: " + cardno + "\n Pin:" + pin);
-
-                new Deposit(pin).setVisible(true);
-                setVisible(false);
-            } else {
-                JElementsCreator.showUnfilledFieldMessage();
-            }
-
-        } else if (ae.getSource() == cancelButton) {
-            setVisible(false);
-            new Login().setVisible(true);
-        }
-
+        return chosenFacility;
     }
 
     public static void main(String[] args) {
