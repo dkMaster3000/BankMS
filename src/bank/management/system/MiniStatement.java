@@ -8,7 +8,7 @@ import java.sql.*;
 public class MiniStatement extends JFrame implements ActionListener {
 
     JButton exitB;
-    DefaultListModel<String> listModel = new DefaultListModel<String>(); //to add the statements
+    DefaultListModel<String> listModel = new DefaultListModel<>(); //to add to the statements
     JList<String> allStatements = new JList<>(listModel); //to present the statements in JScrollPane
 
     MiniStatement(String cardnumber) {
