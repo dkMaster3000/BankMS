@@ -67,7 +67,9 @@ public class Login extends JFrame implements ActionListener {
                 ResultSet rs = c1.s.executeQuery(q);
 
                 if (rs.next()) {
-                    ATMJElementsCreator.forwardToTransactions(cardno, this);
+                    setVisible(false);
+                    new Transactions(cardno).setVisible(true);
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "Incorrect Card Number or PIN");
                 }

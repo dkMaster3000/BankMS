@@ -4,34 +4,29 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 
-public class Deposit extends JFrame implements ActionListener {
+public class Deposit extends ATMFrame {
 
     JTextField amountTF;
     JButton depositB, backB;
     JLabel amountL;
-    String cardnumber;
+
 
     Deposit(String cardnumber) {
-        this.cardnumber = cardnumber;
+        super(cardnumber);
 
-        JLabel atm = ATMJElementsCreator.createATM();
-        add(atm);
+        amountL = createATMJLabel("ENTER AMOUNT YOU WANT TO DEPOSIT", 190, 350, 400, 35);
 
-        amountL = ATMJElementsCreator.createATMJLabel("ENTER AMOUNT YOU WANT TO DEPOSIT", 190, 350, 400, 35, atm);
+        amountTF = createJTextField(22, 190, 420, 320, 25);
 
-        amountTF = ATMJElementsCreator.createJTextField(22, 190, 420, 320, 25, atm);
+        depositB = createATMJButton("DEPOSIT", ATMDEFAULTVALUES.buttonColumn2, ATMDEFAULTVALUES.buttonRow3);
+        backB = createATMBackJButton();
 
-        depositB = ATMJElementsCreator.createATMJButton("DEPOSIT", ATMJElementsCreator.buttonColumn2, ATMJElementsCreator.buttonRow3, atm, this);
-        backB = ATMJElementsCreator.createATMBackJButton(atm, this);
-
-
-        ATMJElementsCreator.setATMDefaultSettings(this);
     }
 
     public void actionPerformed(ActionEvent ae) {
 
         if (ae.getSource() == backB) {
-            ATMJElementsCreator.forwardToTransactions(cardnumber, this);
+            forwardToTransactions();
         } else {
             String amount = amountTF.getText();
 
@@ -42,9 +37,9 @@ public class Deposit extends JFrame implements ActionListener {
                 String query = "insert into " + DatabaseStrings.bankTableS + " values('" + cardnumber + "', '" + date + "', '" + DatabaseStrings.depositTypeS + "', '" + amount + "')";
                 GeneralUtils.sendQuery(query);
 
-                JOptionPane.showMessageDialog(null, amount + ATMJElementsCreator.currencySign + " Deposited Successfully");
+                JOptionPane.showMessageDialog(null, amount + ATMDEFAULTVALUES.currencySign + " Deposited Successfully");
 
-                ATMJElementsCreator.forwardToTransactions(cardnumber, this);
+                forwardToTransactions();
             }
         }
     }

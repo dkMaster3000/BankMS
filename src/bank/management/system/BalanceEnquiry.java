@@ -3,30 +3,24 @@ package bank.management.system;
 import java.awt.event.*;
 import javax.swing.*;
 
-class BalanceEnquiry extends JFrame implements ActionListener {
-
+class BalanceEnquiry extends ATMFrame {
 
     JButton backB;
     JLabel currentBalance;
-    String cardnumber;
 
     BalanceEnquiry(String cardnumber) {
-        this.cardnumber = cardnumber;
-
-        JLabel atm = ATMJElementsCreator.createATM();
-        add(atm);
+        super(cardnumber);
 
         int balance = GeneralUtils.getBalance(cardnumber);
 
-        currentBalance = ATMJElementsCreator.createATMJLabel("Your Current Account Balance is " + balance + ATMJElementsCreator.currencySign, 190, 350, 400, 35, atm);
+        currentBalance = createATMJLabel("Your Current Account Balance is " + balance + ATMDEFAULTVALUES.currencySign, 190, 350, 400, 35);
 
-        backB = ATMJElementsCreator.createATMBackJButton(atm, this);
+        backB = createATMBackJButton();
 
-        ATMJElementsCreator.setATMDefaultSettings(this);
     }
 
     public void actionPerformed(ActionEvent ae) {
-        ATMJElementsCreator.forwardToTransactions(cardnumber, this);
+        forwardToTransactions();
     }
 
     public static void main(String[] args) {

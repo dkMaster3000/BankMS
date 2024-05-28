@@ -48,7 +48,7 @@ public class GeneralUtils {
         return balance;
     }
 
-    public static void handleWithdrawal(String cardnumber, String amount, JFrame activeJFrame) {
+    public static void handleWithdrawal(String cardnumber, String amount) {
         int balance = getBalance(cardnumber);
 
         if (balance > Integer.parseInt(amount)) {
@@ -56,9 +56,9 @@ public class GeneralUtils {
             String query = "insert into " + DatabaseStrings.bankTableS + " values('" + cardnumber + "', '" + date + "', '" + DatabaseStrings.withdrawalTypeS + "', '" + amount + "')";
             GeneralUtils.sendQuery(query);
 
-            JOptionPane.showMessageDialog(null, amount + ATMJElementsCreator.currencySign + " Debited Successfully");
+            JOptionPane.showMessageDialog(null, amount + ATMDEFAULTVALUES.currencySign + " Debited Successfully");
 
-            ATMJElementsCreator.forwardToTransactions(cardnumber, activeJFrame);
+
         } else {
             JOptionPane.showMessageDialog(null, "Insufficient Balance");
         }

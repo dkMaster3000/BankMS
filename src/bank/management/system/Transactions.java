@@ -3,50 +3,44 @@ package bank.management.system;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Transactions extends JFrame implements ActionListener {
+public class Transactions extends ATMFrame {
 
     JLabel transactionsHeader;
     JButton depositB, withdrawalB, fastCashB, statementB, pinChangeB, balanceB, exitB;
-    String cardnumber;
-
 
     Transactions(String cardnumber) {
-        this.cardnumber = cardnumber;
+        super(cardnumber);
 
-        JLabel atm = ATMJElementsCreator.createATM();
-        add(atm);
+        transactionsHeader = createATMJLabel("Please Select Your Transaction", 235, 400, 700, 35);
 
-        transactionsHeader = ATMJElementsCreator.createATMJLabel("Please Select Your Transaction", 235, 400, 700, 35, atm);
-
-        depositB = ATMJElementsCreator.createATMJButton("DEPOSIT", ATMJElementsCreator.buttonColumn1, ATMJElementsCreator.buttonRow1, atm, this);
-        withdrawalB = ATMJElementsCreator.createATMJButton("CASH WITHDRAWL", ATMJElementsCreator.buttonColumn2, ATMJElementsCreator.buttonRow1, atm, this);
-        fastCashB = ATMJElementsCreator.createATMJButton("FAST CASH", ATMJElementsCreator.buttonColumn1, ATMJElementsCreator.buttonRow2, atm, this);
-        statementB = ATMJElementsCreator.createATMJButton("MINI STATEMENT", ATMJElementsCreator.buttonColumn2, ATMJElementsCreator.buttonRow2, atm, this);
-        pinChangeB = ATMJElementsCreator.createATMJButton("PIN CHANGE", ATMJElementsCreator.buttonColumn1, ATMJElementsCreator.buttonRow3, atm, this);
-        balanceB = ATMJElementsCreator.createATMJButton("BALANCE ENQUIRY", ATMJElementsCreator.buttonColumn2, ATMJElementsCreator.buttonRow3, atm, this);
-        exitB = ATMJElementsCreator.createATMJButton("EXIT", ATMJElementsCreator.buttonColumn2, ATMJElementsCreator.buttonRow4, atm, this);
-
-        ATMJElementsCreator.setATMDefaultSettings(this);
+        depositB = createATMJButton("DEPOSIT", ATMDEFAULTVALUES.buttonColumn1, ATMDEFAULTVALUES.buttonRow1);
+        withdrawalB = createATMJButton("CASH WITHDRAWL", ATMDEFAULTVALUES.buttonColumn2, ATMDEFAULTVALUES.buttonRow1);
+        fastCashB = createATMJButton("FAST CASH", ATMDEFAULTVALUES.buttonColumn1, ATMDEFAULTVALUES.buttonRow2);
+        statementB = createATMJButton("MINI STATEMENT", ATMDEFAULTVALUES.buttonColumn2, ATMDEFAULTVALUES.buttonRow2);
+        pinChangeB = createATMJButton("PIN CHANGE", ATMDEFAULTVALUES.buttonColumn1, ATMDEFAULTVALUES.buttonRow3);
+        balanceB = createATMJButton("BALANCE ENQUIRY", ATMDEFAULTVALUES.buttonColumn2, ATMDEFAULTVALUES.buttonRow3);
+        exitB = createATMJButton("EXIT", ATMDEFAULTVALUES.buttonColumn2, ATMDEFAULTVALUES.buttonRow4);
     }
 
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == depositB) {
-            setVisible(false);
-            new Deposit(cardnumber).setVisible(true);
+            forwardTo(new Deposit(cardnumber));
+
         } else if (ae.getSource() == withdrawalB) {
-            setVisible(false);
-            new Withdrawal(cardnumber).setVisible(true);
+            forwardTo(new Withdrawal(cardnumber));
+
         } else if (ae.getSource() == fastCashB) {
-            setVisible(false);
-            new FastCash(cardnumber).setVisible(true);
+            forwardTo(new FastCash(cardnumber));
+
         } else if (ae.getSource() == statementB) {
             new MiniStatement(cardnumber).setVisible(true);
+
         } else if (ae.getSource() == pinChangeB) {
-            setVisible(false);
-            new ChangePin(cardnumber).setVisible(true);
+            forwardTo(new ChangePin(cardnumber));
+
         } else if (ae.getSource() == balanceB) {
-            this.setVisible(false);
-            new BalanceEnquiry(cardnumber).setVisible(true);
+            forwardTo(new BalanceEnquiry(cardnumber));
+
         } else if (ae.getSource() == exitB) {
             System.exit(0);
         } else {

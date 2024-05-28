@@ -3,43 +3,36 @@ package bank.management.system;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class ChangePin extends JFrame implements ActionListener {
+public class ChangePin extends ATMFrame {
 
     JPasswordField newPinPF, repeatNewPinPF;
     JButton changeB, backB;
     JLabel changePinHeaderL, newPinL, repeatNewPinL;
-    String cardnumber;
 
     ChangePin(String cardnumber) {
-        this.cardnumber = cardnumber;
+        super(cardnumber);
 
-        JLabel atm = ATMJElementsCreator.createATM();
-        add(atm);
+        changePinHeaderL = createATMJLabel("CHANGE YOUR PIN", 280, 330, 800, 35);
 
-        changePinHeaderL = ATMJElementsCreator.createATMJLabel("CHANGE YOUR PIN", 280, 330, 800, 35, atm);
+        newPinL = createATMJLabel("New PIN:", 180, 390, 150, 35);
 
-        newPinL = ATMJElementsCreator.createATMJLabel("New PIN:", 180, 390, 150, 35, atm);
-
-        repeatNewPinL = ATMJElementsCreator.createATMJLabel("Re-Enter New PIN:", 180, 440, 200, 35, atm);
+        repeatNewPinL = createATMJLabel("Re-Enter New PIN:", 180, 440, 200, 35);
 
 
-        newPinPF = ATMJElementsCreator.createJPasswordField(350, 390, 180, 25, atm);
+        newPinPF = createJPasswordField(350, 390, 180, 25);
 
-        repeatNewPinPF = ATMJElementsCreator.createJPasswordField(350, 440, 180, 25, atm);
-
-
-        changeB = ATMJElementsCreator.createATMJButton("CHANGE", ATMJElementsCreator.buttonColumn2, ATMJElementsCreator.buttonRow3, atm, this);
-        backB = ATMJElementsCreator.createATMBackJButton(atm, this);
+        repeatNewPinPF = createJPasswordField(350, 440, 180, 25);
 
 
-        ATMJElementsCreator.setATMDefaultSettings(this);
+        changeB = createATMJButton("CHANGE", ATMDEFAULTVALUES.buttonColumn2, ATMDEFAULTVALUES.buttonRow3);
+        backB = createATMBackJButton();
 
     }
 
     public void actionPerformed(ActionEvent ae) {
 
         if (ae.getSource() == backB) {
-            ATMJElementsCreator.forwardToTransactions(cardnumber, this);
+            forwardToTransactions();
         } else {
             String newPin = newPinPF.getText();
             String repeatedPin = repeatNewPinPF.getText();
@@ -63,7 +56,7 @@ public class ChangePin extends JFrame implements ActionListener {
 
             JOptionPane.showMessageDialog(null, "PIN changed successfully");
 
-            ATMJElementsCreator.forwardToTransactions(cardnumber, this);
+            forwardToTransactions();
 
         }
     }

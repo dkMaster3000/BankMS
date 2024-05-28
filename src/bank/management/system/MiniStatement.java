@@ -44,7 +44,7 @@ public class MiniStatement extends JFrame implements ActionListener {
         cardInfoL.setText("Card Number:    " + cardnumber.substring(0, 4) + "XXXXXXXX" + cardnumber.substring(12));
 
         int balance = GeneralUtils.getBalance(cardnumber);
-        totalBalanceL.setText("Your Current Account Balance is " + balance + ATMJElementsCreator.currencySign);
+        totalBalanceL.setText("Your Current Account Balance is " + balance + ATMDEFAULTVALUES.currencySign);
 
         try {
             Conn c1 = new Conn();

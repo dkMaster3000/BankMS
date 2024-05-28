@@ -3,11 +3,11 @@ package bank.management.system;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class FastCash extends JFrame implements ActionListener {
+public class FastCash extends ATMFrame {
 
     JLabel amountL;
     JButton a20B, a50B, a100B, a200B, a500B, a1000B, backB;
-    String cardnumber;
+
 
     private final int dollar20 = 20;
     private final int dollar50 = 50;
@@ -18,43 +18,40 @@ public class FastCash extends JFrame implements ActionListener {
 
 
     FastCash(String cardnumber) {
-        this.cardnumber = cardnumber;
+        super(cardnumber);
 
-        JLabel atm = ATMJElementsCreator.createATM();
-        add(atm);
+        amountL = createATMJLabel("SELECT WITHDRAWAL AMOUNT", 235, 400, 700, 35);
 
-        amountL = ATMJElementsCreator.createATMJLabel("SELECT WITHDRAWAL AMOUNT", 235, 400, 700, 35, atm);
-
-        a20B = ATMJElementsCreator.createATMJButton(dollar20 + ATMJElementsCreator.currencySign, ATMJElementsCreator.buttonColumn1, ATMJElementsCreator.buttonRow1, atm, this);
-        a50B = ATMJElementsCreator.createATMJButton(dollar50 + ATMJElementsCreator.currencySign, ATMJElementsCreator.buttonColumn2, ATMJElementsCreator.buttonRow1, atm, this);
-        a100B = ATMJElementsCreator.createATMJButton(dollar100 + ATMJElementsCreator.currencySign, ATMJElementsCreator.buttonColumn1, ATMJElementsCreator.buttonRow2, atm, this);
-        a200B = ATMJElementsCreator.createATMJButton(dollar200 + ATMJElementsCreator.currencySign, ATMJElementsCreator.buttonColumn2, ATMJElementsCreator.buttonRow2, atm, this);
-        a500B = ATMJElementsCreator.createATMJButton(dollar500 + ATMJElementsCreator.currencySign, ATMJElementsCreator.buttonColumn1, ATMJElementsCreator.buttonRow3, atm, this);
-        a1000B = ATMJElementsCreator.createATMJButton(dollar1000 + ATMJElementsCreator.currencySign, ATMJElementsCreator.buttonColumn2, ATMJElementsCreator.buttonRow3, atm, this);
-        backB = ATMJElementsCreator.createATMBackJButton(atm, this);
-
-        ATMJElementsCreator.setATMDefaultSettings(this);
+        a20B = createATMJButton(dollar20 + ATMDEFAULTVALUES.currencySign, ATMDEFAULTVALUES.buttonColumn1, ATMDEFAULTVALUES.buttonRow1);
+        a50B = createATMJButton(dollar50 + ATMDEFAULTVALUES.currencySign, ATMDEFAULTVALUES.buttonColumn2, ATMDEFAULTVALUES.buttonRow1);
+        a100B = createATMJButton(dollar100 + ATMDEFAULTVALUES.currencySign, ATMDEFAULTVALUES.buttonColumn1, ATMDEFAULTVALUES.buttonRow2);
+        a200B = createATMJButton(dollar200 + ATMDEFAULTVALUES.currencySign, ATMDEFAULTVALUES.buttonColumn2, ATMDEFAULTVALUES.buttonRow2);
+        a500B = createATMJButton(dollar500 + ATMDEFAULTVALUES.currencySign, ATMDEFAULTVALUES.buttonColumn1, ATMDEFAULTVALUES.buttonRow3);
+        a1000B = createATMJButton(dollar1000 + ATMDEFAULTVALUES.currencySign, ATMDEFAULTVALUES.buttonColumn2, ATMDEFAULTVALUES.buttonRow3);
+        backB = createATMBackJButton();
 
     }
 
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == backB) {
-            ATMJElementsCreator.forwardToTransactions(cardnumber, this);
+            forwardToTransactions();
         } else {
             String amount = getAmount(((JButton) ae.getSource()).getText());
 
-            GeneralUtils.handleWithdrawal(cardnumber, amount, this);
+            GeneralUtils.handleWithdrawal(cardnumber, amount);
+
+            forwardToTransactions();
         }
     }
 
     private String getAmount(String amountString) {
         int amount = switch (amountString) {
-            case dollar20 + ATMJElementsCreator.currencySign -> dollar20;
-            case dollar50 + ATMJElementsCreator.currencySign -> dollar50;
-            case dollar100 + ATMJElementsCreator.currencySign -> dollar100;
-            case dollar200 + ATMJElementsCreator.currencySign -> dollar200;
-            case dollar500 + ATMJElementsCreator.currencySign -> dollar500;
-            case dollar1000 + ATMJElementsCreator.currencySign -> dollar1000;
+            case dollar20 + ATMDEFAULTVALUES.currencySign -> dollar20;
+            case dollar50 + ATMDEFAULTVALUES.currencySign -> dollar50;
+            case dollar100 + ATMDEFAULTVALUES.currencySign -> dollar100;
+            case dollar200 + ATMDEFAULTVALUES.currencySign -> dollar200;
+            case dollar500 + ATMDEFAULTVALUES.currencySign -> dollar500;
+            case dollar1000 + ATMDEFAULTVALUES.currencySign -> dollar1000;
             default -> 0;
         };
 
